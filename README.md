@@ -8,4 +8,4 @@ Katie = 🏆
 Raf = ❓
 
 # Running
-To run the server, enter the server directory and run <b>node index.js</b>. 
+To run the server, run the class located at server/src/main/java/databases/college/fantsay/FantasyApplication.java
