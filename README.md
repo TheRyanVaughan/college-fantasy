@@ -6,3 +6,6 @@ Caleb = 🐐
 Ryan = 🚩
 Katie = 🏆
 Raf = ❓
+
+# Running
+To run the server, enter the server directory and run <b>node index.js</b>. 
