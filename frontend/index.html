@@ -8,6 +8,14 @@
     <title>Database Demo</title>
   </head>
   <body>
+    <h1>Teams In League</h1>
+    <select name="Teams" id="league1">
+      <option value="TeamA">TeamA</option>
+      <option value="TeamB">TeamB</option>
+      <option value="TeamC">TeamC</option>
+      <option value="TeamD">TeamC</option>
+    </select>
+    <br />
     <h1>Basic Functionality</h1>
     <h2>Get League</h2>
     <p>Returns all the teams in a given league</p>
@@ -23,7 +31,24 @@
       name
     </p>
     <button>Get Player</button>
+
+    <h2>Add Team</h2>
+    <p>Adds a team to a specified league</p>
+    <button>Add Team</button>
     <br />
+
+    <h2>Drop Team</h2>
+    <p>Drops a team to a specified league</p>
+    <button>Drop Team</button>
+
+    <h2>Add League</h2>
+    <p>Adds a league to the database</p>
+    <button>Add League</button>
+    <br />
+
+    <h2>Drop League</h2>
+    <p>Drops a league from the database</p>
+    <button>Drop League</button>
 
     <h1>Advanced Functionality</h1>
     <h2>Calculate Score</h2>
@@ -36,6 +61,7 @@
     <h2>Drop Player</h2>
     <p>Gets rid of player from a team roster and adds them to Free Agents</p>
     <button>Drop Player</button>
+
     <h2>Add Player</h2>
     <p>
       Adds a player from Free Agents and removes them from the free agency list
