@@ -1,7 +1,3 @@
---need to update data types and make sure they are consistent
---need to make sure all fields are in each table
---need to add foreign keys
-
 CREATE TABLE LEAGUE(
     LeagueName        VarChar(20)       NOT NULL,
     LeagueID    Int               NOT NULL,
@@ -61,11 +57,11 @@ CREATE TABLE Match_Up(
     HomeID  INT NOT NULL,
     AwayID  INT NOT NULL,
     WeekNum INT NOT NULL,
-    HomeWon VarChar(20) NOT NULL,
+    HomeWon Boolean NOT NULL,
     CONSTRAINT MU_PK PRIMARY KEY(MatchID, LeagueID, HomeID, AwayID),
     CONSTRAINT LID_FK FOREIGN KEY (LeagueID) references League(LeagueID),
     CONSTRAINT HID_FK FOREIGN KEY (HomeID) references Team(TeamID),
-    CONSTRAINT AID_FK FOREIGN KEY (AwayID) references Team(TeadID)
+    CONSTRAINT AID_FK FOREIGN KEY (AwayID) references Team(TeamID)
     );
     
     
