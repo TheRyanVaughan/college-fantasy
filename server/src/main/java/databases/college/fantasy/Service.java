@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Properties;
 
 import databases.college.fantasy.models.Employee;
+import databases.college.fantasy.models.League;
+import databases.college.fantasy.models.Player;
 import databases.college.fantasy.models.Team;
 import oracle.jdbc.pool.OracleDataSource;
 @org.springframework.stereotype.Service
@@ -112,6 +114,42 @@ public class Service
 	public List<Team> getTeamsInLeague(int leagueID)
 	{
 		// TODO: Retrieve the teams in a given league from the database
+		return null;
+	}
+
+	public List<Team> getUsersTeams(int userID)
+	{
+		// TODO: Retrieve a user's teams from the database
+		return null;
+	}
+
+	public List<Player> getPlayersOnTeam(int teamID)
+	{
+		// TODO: Get the players on a given team
+		return null;
+	}
+
+	public Team addTeam(Team team)
+	{
+		// TODO: insert a team into the DB
+		return null;
+	}
+
+	public Team deleteTeam(int teamID)
+	{
+		// TODO: Remove a team from the DB
+	return null;
+	}
+
+	public League addLeague(League league)
+	{
+		// TODO: Create a league
+		return null;
+	}
+
+	public League deleteLeague(int leagueID)
+	{
+		// TODO: Delete a League
 		return null;
 	}
 }
