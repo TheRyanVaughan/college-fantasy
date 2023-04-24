@@ -1,18 +1,16 @@
 package databases.college.fantasy;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import databases.college.fantasy.models.Employee;
+import databases.college.fantasy.models.Team;
 import oracle.jdbc.pool.OracleDataSource;
 @org.springframework.stereotype.Service
 public class Service
@@ -109,5 +107,11 @@ public class Service
 			single = Character.valueOf(raw.charAt(0));
 		}
 		return single;
+	}
+
+	public List<Team> getTeamsInLeague(int leagueID)
+	{
+		// TODO: Retrieve the teams in a given league from the database
+		return null;
 	}
 }
