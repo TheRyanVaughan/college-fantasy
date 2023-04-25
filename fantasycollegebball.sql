@@ -3,8 +3,7 @@ CREATE TABLE LEAGUE(
     LeagueID    Int               NOT NULL,
     ManagerID   Int               NOT NULL,
     Max_No_Players  Int           NOT NULL,
-    CONSTRAINT League_PK PRIMARY KEY(LeagueID),
-    CONSTRAINT MID_FK FOREIGN KEY (ManagerID) references User(UserID)
+    CONSTRAINT League_PK PRIMARY KEY(LeagueID)
     );
 
 CREATE TABLE USER(
@@ -25,10 +24,9 @@ CREATE TABLE FANTASY_TEAM(
     Wins Int,
     Losses Int,
     Draws Int,
-    CONSTRAINT TID_PK PRIMARY KEY(TeamID, UserID, LeagueID),
-    CONSTRAINT UID_FK FOREIGN KEY (UserID) references User(UserID),
-    CONSTRAINT LID_FK FOREIGN KEY (LeagueID) references League(LeagueID)
+    CONSTRAINT TID_PK PRIMARY KEY(TeamID, UserID, LeagueID)
     );
+    
 
 CREATE TABLE COLLEGE_PLAYERS(
     PlayerID  Int NOT NULL,
@@ -44,11 +42,7 @@ CREATE TABLE Players_on_Team(
     TeamID      INT NOT NULL,
     UserID      INT NOT NULL,
     LeagueID    INT NOT NULL,
-    CONSTRAINT PT_PK PRIMARY KEY(PlayerID, TeamID, UserID, LeagueID),
-    CONSTRAINT PID_FK FOREIGN KEY (PlayerID) references COLLEGE_PLAYERS(PlayerID),
-    CONSTRAINT TID_FK FOREIGN KEY (TearmID) references FANTASY_TEAM(TeamID),
-    CONSTRAINT UID_FK FOREIGN KEY (UserID) references USER(UserID),
-    CONSTRAINT LID_FK FOREIGN KEY (LeagueID) references LEAGUE(LeagueID)
+    CONSTRAINT PT_PK PRIMARY KEY(PlayerID, TeamID, UserID, LeagueID)
     );
 
 CREATE TABLE Match_Up(
@@ -58,11 +52,40 @@ CREATE TABLE Match_Up(
     AwayID  INT NOT NULL,
     WeekNum INT NOT NULL,
     HomeWon Boolean NOT NULL,
-    CONSTRAINT MU_PK PRIMARY KEY(MatchID, LeagueID, HomeID, AwayID),
-    CONSTRAINT LID_FK FOREIGN KEY (LeagueID) references League(LeagueID),
-    CONSTRAINT HID_FK FOREIGN KEY (HomeID) references Team(TeamID),
-    CONSTRAINT AID_FK FOREIGN KEY (AwayID) references Team(TeamID)
+    CONSTRAINT MU_PK PRIMARY KEY(MatchID, LeagueID, HomeID, AwayID)
     );
     
-    
-    
+ALTER TABLE LEAGUE
+ADD CONSTRAINT FK_MID
+FOREIGN KEY (ManagerID) references User(UserID);
+
+
+ALTER TABLE FANTASY_TEAM
+ADD CONSTRAINT UID_FK
+FOREIGN KEY (UserID) references User(UserID);
+ALTER TABLE FANTASY_TEAM
+ADD CONSTRAINT LID_FK
+FOREIGN KEY (LeagueID) references League(LeagueID);
+
+ALTER TABLE Players_on_Team
+ADD CONSTRAINT PID_FK
+FOREIGN KEY (PlayerID) references COLLEGE_PLAYERS(PlayerID);
+ALTER TABLE Players_on_Team
+ADD CONSTRAINT TID_FK
+FOREIGN KEY (TeamID) references FANTASY_TEAM(TeamID);
+ALTER TABLE Players_on_Team
+ADD CONSTRAINT UID_FK
+FOREIGN KEY (UserID) references User(UserrID);
+ALTER TABLE Players_on_Team
+ADD CONSTRAINT LID_FK
+FOREIGN KEY (LeagueID) references LEAGUE(LeagueID);
+
+ALTER TABLE Match_Up
+ADD CONSTRAINT LID_FK
+FOREIGN KEY (LeagueID) references League(LeagueID);
+ALTER TABLE Match_Up
+ADD CONSTRAINT HID_FK
+FOREIGN KEY (HomeID) references Team(TeamID);
+ALTER TABLE Match_Up
+ADD CONSTRAINT AID_FK
+FOREIGN KEY (AWAYID) references Team(TeamID);
