@@ -1,4 +1,4 @@
-package databases.college.fantasy;
+package databases.college.fantasy.models;
 
 import java.util.Date;
 
