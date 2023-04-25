@@ -12,23 +12,23 @@ INSERT INTO APP_USERS VALUES(seqUID.nextVal,
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
     'Ryan', 'Y', 'Vaughan', 'ryanvaughan', to_date('2001-27-11', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Katie', 'Z', 'Kintzel;', 'Kkintzell', to_date('2001-12-20', 'yyyy-mm-dd'));
+    'Katie', 'Z', 'Kintzel', 'Kkintzell', to_date('2001-12-20', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Jacob', 'A', 'Beaudin;', 'jbeaudin', to_date('2001-8-22', 'yyyy-mm-dd'));
+    'Jacob', 'A', 'Beaudin', 'jbeaudin', to_date('2001-8-22', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Jack', 'G', 'Ahmed;', 'jgahmed', to_date('2002-3-15', 'yyyy-mm-dd'));
+    'Jack', 'G', 'Ahmed', 'jgahmed', to_date('2002-3-15', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Gabe', 'J', 'Agrama;', 'gagrama', to_date('2002-06-07', 'yyyy-mm-dd'));
+    'Gabe', 'J', 'Agrama', 'gagrama', to_date('2002-06-07', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Lauren', 'C', 'Ghong;', 'lghong', to_date('2002-02-02', 'yyyy-mm-dd'));
+    'Lauren', 'C', 'Ghong', 'lghong', to_date('2002-02-02', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Venkat', 'G', 'Margapuri;', 'vkat', to_date('1995-12-12', 'yyyy-mm-dd'));
+    'Venkat', 'G', 'Margapuri', 'vkat', to_date('1995-12-12', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Kristin', 'B', 'Obermeyer;', 'kobermeyer', to_date('1990-09-10', 'yyyy-mm-dd'));
+    'Kristin', 'B', 'Obermeyer', 'kobermeyer', to_date('1990-09-10', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Daniel', 'J', 'Joyce;', 'djoyce', to_date('1985-03-15', 'yyyy-mm-dd'));
+    'Daniel', 'J', 'Joyce', 'djoyce', to_date('1985-03-15', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Frank', 'I', 'Klassner;', 'klassnerrrr', to_date('1985-06-03', 'yyyy-mm-dd'));
+    'Frank', 'I', 'Klassner', 'klassnerrrr', to_date('1985-06-03', 'yyyy-mm-dd'));
     
 
 ---INPUT FOR FANTASY_TEAM TABLE----
