@@ -114,13 +114,65 @@ public class Service
 	public List<Team> getTeamsInLeague(int leagueID)
 	{
 		// TODO: Retrieve the teams in a given league from the database
-		return null;
-	}
+		
+		List<Team> teams = new ArrayList<Team>();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM FANTASY_TEAM WHERE LEAGUEID = " + leagueID);
+			
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					Team t = map(resultSet);
+					teams.add(t);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		
+		return teams;
+		
+	} // end function
+
 
 	public List<Team> getUsersTeams(int userID)
 	{
 		// TODO: Retrieve a user's teams from the database
-		return null;
+		
+		List<Team> usersTeam = new ArrayList<Team>();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM FANTASY_TEAM WHERE USERID = " + userID);
+			
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					Team ut = map(resultSet);
+					usersTeam.add(ut);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		
+		return usersTeam;
 	}
 
 	public List<Player> getPlayersOnTeam(int teamID)
