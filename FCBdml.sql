@@ -1,16 +1,10 @@
-----INPUT FOR THE LEAGUE TABLE----
-INSERT INTO LEAGUE VALUES('Ballers', 100, 1, 6);
-INSERT INTO LEAGUE VALUES('Dunkers', 101, 5, 6);
-INSERT INTO LEAGUE VALUES('Shootas', 102, 9, 6);
-
-
 ----INPUT FOR THE APP_USERS TABLE----
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
     'Rafael', 'B', 'Velasquez', 'rafaelbvelasquez', to_date('2002-06-17', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
     'Caleb', 'X', 'Magoola', 'guccigoola', to_date('2002-08-15', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
-    'Ryan', 'Y', 'Vaughan', 'ryanvaughan', to_date('2001-27-11', 'yyyy-mm-dd'));
+    'Ryan', 'Y', 'Vaughan', 'ryanvaughan', to_date('2001-11-27', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
     'Katie', 'Z', 'Kintzel', 'Kkintzell', to_date('2001-12-20', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
@@ -29,7 +23,12 @@ INSERT INTO APP_USERS VALUES(seqUID.nextVal,
     'Daniel', 'J', 'Joyce', 'djoyce', to_date('1985-03-15', 'yyyy-mm-dd'));
 INSERT INTO APP_USERS VALUES(seqUID.nextVal, 
     'Frank', 'I', 'Klassner', 'klassnerrrr', to_date('1985-06-03', 'yyyy-mm-dd'));
-    
+
+----INPUT FOR THE LEAGUE TABLE----
+INSERT INTO LEAGUE VALUES('Ballers', 100, 1, 6);
+INSERT INTO LEAGUE VALUES('Dunkers', 101, 5, 6);
+INSERT INTO LEAGUE VALUES('Shootas', 102, 9, 6);
+
 
 ---INPUT FOR FANTASY_TEAM TABLE----
 INSERT INTO FANTASY_TEAM VALUES(seqTID.nextVal, 1, 100, 'Team Raf', 2, 0, 0);
@@ -63,3 +62,12 @@ INSERT INTO MATCH_UP VALUES(seqMID.nextVal, 102, 9, 12, 1, 1);
 INSERT INTO MATCH_UP VALUES(seqMID.nextVal, 102, 10, 11, 1, 0);
 INSERT INTO MATCH_UP VALUES(seqMID.nextVal, 102, 11, 9, 1, 0);
 INSERT INTO MATCH_UP VALUES(seqMID.nextVal, 102, 12, 10, 1, 0);
+
+
+--DELETE FROM APP_USERS;
+--DELETE FROM LEAGUE;
+
+--ALTER SEQUENCE seqUID RESTART;
+--ALTER SEQUENCE seqMID RESTART;
+--ALTER SEQUENCE seqLID RESTART;
+--ALTER SEQUENCE seqTID RESTART;
