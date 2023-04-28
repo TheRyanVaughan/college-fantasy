@@ -17,6 +17,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @org.springframework.stereotype.Service
+
 public class Service
 {
 	private Connection connection = null;
@@ -26,9 +27,39 @@ public class Service
 
 	private final static String DB_URL_CSDB2 = "jdbc:oracle:thin:@csdb.csc.villanova.edu:1521/orcl.villanova.edu";
 
-	private final static String username = "rvaugha4";
-	private final static String password = "Sp02269960";
+//	private final static String username = "rvaugha4";
+//	private final static String password = "Sp02269960";
+	
+	private final static String username = "rvelasq1";
+	private final static String password = "Sp02248298";
 
+	
+	public static void main(String[] args) throws Exception {
+		Service service = new Service();
+		service.examples();
+	}
+	
+//	public void examples() throws Exception {
+//		Connection connection = null;
+//
+//		try {
+//			connection = openConnection();
+//			
+//			
+//			
+//		}
+//		catch (SQLException e) {
+//			System.out.println("Trouble opening connection or executing SQL: " + e.getMessage());
+//			throw e;
+//		}
+//		finally {
+//			if (connection != null) {
+//				connection.close();
+//			}
+//		}
+//
+//	}
+	
 	public Service() throws SQLException {
 		Properties connectionProps = getProperties();
 
@@ -113,34 +144,153 @@ public class Service
 		return single;
 	}
 
-	public List<Team> getTeamsInLeague(int leagueID)
+	public List<Team> getTeamsInLeague(Connection connection, int leagueID)
 	{
 		// TODO: Retrieve the teams in a given league from the database
-		return null;
-	}
+		
+		List<Team> teams = new ArrayList<Team>();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM FANTASY_TEAM WHERE LEAGUEID = " + leagueID);
+			
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					Team t = map(resultSet);
+					teams.add(t);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		
+		return teams;
+		
+	} // end function
 
-	public List<Team> getUsersTeams(int userID)
+
+	public List<Team> getUsersTeams(Connection connection, int userID)
 	{
 		// TODO: Retrieve a user's teams from the database
-		return null;
+		
+		List<Team> usersTeam = new ArrayList<Team>();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM fantasy_team WHERE userID = " + userID);
+			
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					Team ut = map(resultSet);
+					usersTeam.add(ut);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		
+		return usersTeam;
 	}
 
 	public List<Player> getPlayersOnTeam(int teamID)
 	{
 		// TODO: Get the players on a given team
-		return null;
+		
+		List<Player> playersOnTeam = new ArrayList<>();
+		
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + userID);
+			
+			while(resultSet.next()) {
+				Player p = map(resultSet);
+				playersOnTeam.add(p);
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		
+		return playersOnTeam;
 	}
 
-	public Team addTeam(Team team)
+	public Team addTeam(Connection connection, int teamID, int userID, int leagueID, String teamName, int wins, int losses, int draws)
 	{
 		// TODO: insert a team into the DB
-		return null;
+		
+		Statement statement = null;
+		
+		try {
+			statement = connection.createStatement();
+			
+			String query = ("INSERT INTO fantasy_team (TeamID, UserID, LeagueID, teamName, wins, losses, draws) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
+			
+			prepStatement.setInt(1, teamId);
+			prepStatement.setInt(2, userID);
+			prepStatement.setInt(3, leagueID);
+			prepStatement.setString(4, teamName);
+			prepStatement.setInt(5, wins);
+			prepStatement.setInt(6, losses);
+			prepStatement.setInt(7, draws);
+			
+			statement.executeUpdate(query);
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
 	}
 
 	public Team deleteTeam(int teamID)
 	{
 		// TODO: Remove a team from the DB
-	return null;
+		
+		Statement statement = null;
+		
+		try {
+			statement = connection.createStatement();
+			
+			String query = ("DELETE FROM fantasy_team WHERE teamID = " + teamID);
+			
+			statement.executeUpdate(query);
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
 	}
 
 	public League addLeague(League league)
