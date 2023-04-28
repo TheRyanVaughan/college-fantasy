@@ -24,8 +24,8 @@ public class Service
 
 	private final static String DB_URL_CSDB2 = "jdbc:oracle:thin:@csdb.csc.villanova.edu:1521/orcl.villanova.edu";
 
-//	private final static String username = "rvaugha4";
-//	private final static String password = "Sp02269960";
+//	private final static String username = "cmagoo01";
+//	private final static String password = "Sp02267831";
 	
 	private final static String username = "rvelasq1";
 	private final static String password = "Sp02248298";
