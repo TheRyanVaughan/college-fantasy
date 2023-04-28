@@ -4,27 +4,49 @@ import java.util.Objects;
 
 public class Team
 {
-	String leagueName;
+	int teamID;
+
+	int userID;
+
 	int leagueID;
-	int managerID;
-	int maxNoPlayers;
 
-	public Team(String leagueName, int leagueID, int managerID, int maxNoPlayers)
+	String name;
+
+	int wins;
+
+	int losses;
+
+	int draws;
+
+	public Team(int teamID, int userID, int leagueID, String name, int wins, int losses, int draws)
 	{
-		this.leagueName = leagueName;
+		this.teamID = teamID;
+		this.userID = userID;
 		this.leagueID = leagueID;
-		this.managerID = managerID;
-		this.maxNoPlayers = maxNoPlayers;
+		this.name = name;
+		this.wins = wins;
+		this.losses = losses;
+		this.draws = draws;
 	}
 
-	public String getLeagueName()
+	public int getTeamID()
 	{
-		return leagueName;
+		return teamID;
 	}
 
-	public void setLeagueName(String leagueName)
+	public void setTeamID(int teamID)
 	{
-		this.leagueName = leagueName;
+		this.teamID = teamID;
+	}
+
+	public int getUserID()
+	{
+		return userID;
+	}
+
+	public void setUserID(int userID)
+	{
+		this.userID = userID;
 	}
 
 	public int getLeagueID()
@@ -37,24 +59,44 @@ public class Team
 		this.leagueID = leagueID;
 	}
 
-	public int getManagerID()
+	public String getName()
 	{
-		return managerID;
+		return name;
 	}
 
-	public void setManagerID(int managerID)
+	public void setName(String name)
 	{
-		this.managerID = managerID;
+		this.name = name;
 	}
 
-	public int getMaxNoPlayers()
+	public int getWins()
 	{
-		return maxNoPlayers;
+		return wins;
 	}
 
-	public void setMaxNoPlayers(int maxNoPlayers)
+	public void setWins(int wins)
 	{
-		this.maxNoPlayers = maxNoPlayers;
+		this.wins = wins;
+	}
+
+	public int getLosses()
+	{
+		return losses;
+	}
+
+	public void setLosses(int losses)
+	{
+		this.losses = losses;
+	}
+
+	public int getDraws()
+	{
+		return draws;
+	}
+
+	public void setDraws(int draws)
+	{
+		this.draws = draws;
 	}
 
 	@Override
@@ -65,20 +107,20 @@ public class Team
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Team team = (Team) o;
-		return leagueID == team.leagueID && managerID == team.managerID && maxNoPlayers == team.maxNoPlayers
-				&& leagueName.equals(team.leagueName);
+		return teamID == team.teamID && userID == team.userID && leagueID == team.leagueID && wins == team.wins
+				&& losses == team.losses && draws == team.draws && name.equals(team.name);
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(leagueName, leagueID, managerID, maxNoPlayers);
+		return Objects.hash(teamID, userID, leagueID, name, wins, losses, draws);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Team{" + "leagueName='" + leagueName + '\'' + ", leagueID=" + leagueID + ", managerID=" + managerID
-				+ ", maxNoPlayers=" + maxNoPlayers + '}';
+		return "Team{" + "teamID=" + teamID + ", userID=" + userID + ", leagueID=" + leagueID + ", name='" + name + '\''
+				+ ", wins=" + wins + ", losses=" + losses + ", draws=" + draws + '}';
 	}
 }

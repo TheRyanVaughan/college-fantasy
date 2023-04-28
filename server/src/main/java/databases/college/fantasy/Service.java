@@ -1,9 +1,6 @@
 package databases.college.fantasy;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -236,35 +233,36 @@ public class Service
 		return playersOnTeam;
 	}
 
-	public Team addTeam(Connection connection, int teamID, int userID, int leagueID, String teamName, int wins, int losses, int draws)
+	public Team addTeam(Team team)
+			throws SQLException
 	{
-		// TODO: insert a team into the DB
 		
-		Statement statement = null;
+		PreparedStatement prepStatement = null;
 		
 		try {
-			statement = connection.createStatement();
+
+			prepStatement = connection.prepareStatement("INSERT INTO fantasy_team (TeamID, UserID, LeagueID, teamName, wins, losses, draws) " +
+					" VALUES (?, ?, ?, ?, ?, ?, ?)" );
+
+
+			String getNextTID = "seqTID.nextval";
+			prepStatement.setString(1, getNextTID);
+			prepStatement.setInt(2, team.getUserID());
+			prepStatement.setInt(3, team.getLeagueID());
+			prepStatement.setString(4, team.getName());
+			prepStatement.setInt(5, team.getWins());
+			prepStatement.setInt(6, team.getLosses());
+			prepStatement.setInt(7, team.getDraws());
 			
-			String query = ("INSERT INTO fantasy_team (TeamID, UserID, LeagueID, teamName, wins, losses, draws) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
-			
-			prepStatement.setInt(1, teamId);
-			prepStatement.setInt(2, userID);
-			prepStatement.setInt(3, leagueID);
-			prepStatement.setString(4, teamName);
-			prepStatement.setInt(5, wins);
-			prepStatement.setInt(6, losses);
-			prepStatement.setInt(7, draws);
-			
-			statement.executeUpdate(query);
+			prepStatement.executeUpdate();
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
 			throw e;
 		}
 		finally {
-			if (statement != null) {
-				statement.close();
+			if (prepStatement != null) {
+				prepStatement.close();
 			}
 		}
 	}

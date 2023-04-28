@@ -54,7 +54,13 @@ public class Controller
 	public ResponseEntity<Team> addTeam(@RequestBody Team team) {
 		// TODO: Add error handling
 		// Adds a team to a league specified in the requestBody
-		return ResponseEntity.ok(service.addTeam(team));
+		try {
+			team = service.addTeam(team);
+			return ResponseEntity.ok(service.addTeam(team));
+		}
+		catch (SQLException e) {
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@DeleteMapping("/team")
