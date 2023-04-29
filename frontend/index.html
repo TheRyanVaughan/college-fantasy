@@ -39,7 +39,15 @@
 
     <h2>Add Team</h2>
     <p>Adds a team to a specified league</p>
-    <button>Add Team</button>
+    <button onclick="addTeam()">Add Team</button>
+    <div class="inputs-div">
+      <input type="text" id="teamID" placeholder="teamID"/>
+      <input type="text" id="teamLeagueID" placeholder="leagueID"/>
+      <input type="text" id="teamName" placeholder="name"/>
+      <input type="text" id="wins" placeholder="wins"/>
+      <input type="text" id="losses" placeholder="losses"/>
+      <input type="text" id="draws" placeholder="draws"/>
+    </div>
     <br />
 
     <h2>Drop Team</h2>
@@ -48,7 +56,14 @@
 
     <h2>Add League</h2>
     <p>Adds a league to the database</p>
-    <button>Add League</button>
+    <button onclick="addLeague()">Add League</button>
+
+    <div class="inputs-div">
+      <input type="text" id="leagueID" placeholder="leagueID"/>
+      <input type="text" id="leaguename" placeholder="name"/>
+      <input type="text" id="managerid" placeholder="managerid"/>
+      <input type="text" id="maxNoPlayers" placeholder="maxNoPlayers"/>
+    </div>
     <br />
 
     <h2>Drop League</h2>
