@@ -8,10 +8,9 @@ import java.util.Properties;
 
 import databases.college.fantasy.models.Employee;
 import databases.college.fantasy.models.League;
-import databases.college.fantasy.models.Player;
+import databases.college.fantasy.models.PlayerOnTeam;
 import databases.college.fantasy.models.Team;
 import oracle.jdbc.pool.OracleDataSource;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @org.springframework.stereotype.Service
 
@@ -160,7 +159,7 @@ public class Service
 		return new Team(teamID, userID, leagueID, name, wins, losses, draws);
 	}
 
-	public List<Team> getUsersTeams(Connection connection, int userID)
+	public List<Team> getUsersTeams(int userID) throws SQLException
 	{
 		// TODO: Retrieve a user's teams from the database
 		
@@ -173,7 +172,7 @@ public class Service
 			
 			if(resultSet != null) {
 				while(resultSet.next()) {
-					Team ut = map(resultSet);
+					Team ut = teamMap(resultSet);
 					usersTeam.add(ut);
 				}
 			}
@@ -191,18 +190,20 @@ public class Service
 		return usersTeam;
 	}
 
-	public List<Player> getPlayersOnTeam(int teamID)
+	public List<PlayerOnTeam> getPlayersOnTeam(int teamID) throws SQLException
 	{
 		// TODO: Get the players on a given team
 		
-		List<Player> playersOnTeam = new ArrayList<>();
-		
+		List<PlayerOnTeam> playersOnTeam = new ArrayList<>();
+
+		Statement statement = null;
+
 		try {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + userID);
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + teamID);
 			
 			while(resultSet.next()) {
-				Player p = map(resultSet);
+				PlayerOnTeam p = playerMap(resultSet);
 				playersOnTeam.add(p);
 			}
 		}
@@ -217,6 +218,16 @@ public class Service
 		}
 		
 		return playersOnTeam;
+	}
+
+	private PlayerOnTeam playerMap(ResultSet resultSet) throws SQLException
+	{
+		Integer playerID = resultSet.getInt("playerid");
+		Integer teamID = resultSet.getInt("teamid");
+		Integer userid = resultSet.getInt("userid");
+		Integer leagueID = resultSet.getInt("leagueid");
+
+		return new PlayerOnTeam(playerID, teamID, userid, leagueID);
 	}
 
 	public Team addTeam(Team team)
@@ -241,6 +252,8 @@ public class Service
 			prepStatement.setInt(7, team.getDraws());
 			
 			prepStatement.executeUpdate();
+
+			return team;
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
@@ -253,7 +266,7 @@ public class Service
 		}
 	}
 
-	public Team deleteTeam(int teamID)
+	public void deleteTeam(int teamID) throws SQLException
 	{
 		// TODO: Remove a team from the DB
 		
@@ -265,6 +278,7 @@ public class Service
 			String query = ("DELETE FROM fantasy_team WHERE teamID = " + teamID);
 			
 			statement.executeUpdate(query);
+
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());

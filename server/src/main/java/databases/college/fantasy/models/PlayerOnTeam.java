@@ -2,7 +2,7 @@ package databases.college.fantasy.models;
 
 import java.util.Objects;
 
-public class Player
+public class PlayerOnTeam
 {
 		int playerID;
 	
@@ -12,7 +12,7 @@ public class Player
 
 		int leagueID;
 		
-		public Player(int playerID, int teamID, int userID, int leagueID) {
+		public PlayerOnTeam(int playerID, int teamID, int userID, int leagueID) {
 			this.playerID = playerID;
 			this.teamID = teamID;
 			this.userID = userID;
@@ -64,7 +64,7 @@ public class Player
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Player other = (Player) obj;
+			PlayerOnTeam other = (PlayerOnTeam) obj;
 			return leagueID == other.leagueID && playerID == other.playerID && teamID == other.teamID
 					&& userID == other.userID;
 		}

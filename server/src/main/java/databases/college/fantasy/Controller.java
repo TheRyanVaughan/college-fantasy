@@ -2,7 +2,7 @@ package databases.college.fantasy;
 
 import databases.college.fantasy.models.Employee;
 import databases.college.fantasy.models.League;
-import databases.college.fantasy.models.Player;
+import databases.college.fantasy.models.PlayerOnTeam;
 import databases.college.fantasy.models.Team;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,6 @@ public class Controller
 
 	@GetMapping("/teams")
 	public ResponseEntity<List<Team>> getTeamsInLeague(@RequestParam int leagueID) {
-		// TODO: Add error handling
 		try {
 			List<Team> teams = service.getTeamsInLeague(leagueID);
 			return ResponseEntity.ok(teams);
@@ -39,19 +38,32 @@ public class Controller
 	}
 
 	@GetMapping("/players")
-	public ResponseEntity<List<Player>> getPlayersOnTeam(@RequestParam int teamID) {
-		// TODO: Add error handling
-		return ResponseEntity.ok(service.getPlayersOnTeam(teamID));
+	public ResponseEntity<List<PlayerOnTeam>> getPlayersOnTeam(@RequestParam int teamID) {
+		try {
+			List<PlayerOnTeam> players = service.getPlayersOnTeam(teamID);
+			return ResponseEntity.ok(service.getPlayersOnTeam(teamID));
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.internalServerError().build();
+		}
+
 	}
 
 	@GetMapping("/user/teams")
 	public ResponseEntity<List<Team>> getTeamsOfUser(@RequestParam int userID) {
-		// TODO: Add error handling
-		return ResponseEntity.ok(service.getUsersTeams(userID));
+		try {
+			List<Team> teams = service.getTeamsInLeague(userID);
+			return ResponseEntity.ok(teams);
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@GetMapping("/player")
-	public ResponseEntity<Player> getPlayerByName(@RequestParam String firstName, @RequestParam String lastName) {
+	public ResponseEntity<PlayerOnTeam> getPlayerByName(@RequestParam String firstName, @RequestParam String lastName) {
 		// TODO: Add error handling
 		// what if multiple players have same name? Add university? Return list? discuss
 		return null;
@@ -71,8 +83,15 @@ public class Controller
 	}
 
 	@DeleteMapping("/team")
-	public ResponseEntity<Team> deleteTeam(@RequestParam int teamID) {
-		return ResponseEntity.ok(service.deleteTeam(teamID));
+	public ResponseEntity<?> deleteTeam(@RequestParam int teamID) {
+		try {
+			service.deleteTeam(teamID);
+			return ResponseEntity.ok().build();
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PostMapping("/league")
