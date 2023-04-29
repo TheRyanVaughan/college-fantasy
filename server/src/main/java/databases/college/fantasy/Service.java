@@ -11,6 +11,7 @@ import databases.college.fantasy.models.League;
 import databases.college.fantasy.models.PlayerOnTeam;
 import databases.college.fantasy.models.Team;
 import oracle.jdbc.pool.OracleDataSource;
+import org.springframework.http.ResponseEntity;
 
 @org.springframework.stereotype.Service
 
@@ -298,5 +299,34 @@ public class Service
 	{
 		// TODO: Delete a League
 		return null;
+	}
+
+	public List<String> getLeagueNames() throws SQLException
+	{
+		List<String> leagues = new ArrayList<>();
+
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT leaguename FROM LEAGUE");
+
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					String leagueName = resultSet.getString("leaguename");
+					leagues.add(leagueName);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+
+		return leagues;
 	}
 }

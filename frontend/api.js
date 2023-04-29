@@ -65,8 +65,8 @@ async function addLeague() {
 
     let json = await response.json();
 
+    loadLeaguesIntoOption();
 
-    console.log(json);
 }
 
 function displayData(tableId, objectArr) {
@@ -92,9 +92,27 @@ function displayData(tableId, objectArr) {
         for (const property in object) {
             let newCell = row.insertCell(colIdx);
             newCell.innerText = object[property];
-            console.log(property)
             colIdx+=1;
         }
     }
     
 }
+
+var hasLoaded = false;
+async function loadLeaguesIntoOption() {
+    let response = await fetch("http://localhost:8080/leagues")
+    let json = await response.json()
+
+    
+    let select = document.getElementById("league1")
+    // clear previous options
+    select.innerHTML = ''
+
+    json.forEach(name => {
+        select.add(new Option(name));
+    })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadLeaguesIntoOption()
+})

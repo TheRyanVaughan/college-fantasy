@@ -4,10 +4,12 @@ import databases.college.fantasy.models.Employee;
 import databases.college.fantasy.models.League;
 import databases.college.fantasy.models.PlayerOnTeam;
 import databases.college.fantasy.models.Team;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -96,12 +98,24 @@ public class Controller
 	}
 
 	@PostMapping("/league")
-	public ResponseEntity<League> AddLeague(@RequestBody League league) {
+	public ResponseEntity<League> addLeague(@RequestBody League league) {
 		return ResponseEntity.ok(service.addLeague(league));
 	}
 
 	@DeleteMapping("/league")
-	public ResponseEntity<League> AddLeague(@RequestParam int leagueID) {
+	public ResponseEntity<League> deleteLeague(@RequestParam int leagueID) {
 		return ResponseEntity.ok(service.deleteLeague(leagueID));
 	}
+
+	@GetMapping("/leagues")
+	public ResponseEntity<List<String>> getLeagues() {
+		try {
+			return ResponseEntity.ok(service.getLeagueNames());
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.ok(new ArrayList<String>());
+		}
+	}
+
 }
