@@ -29,6 +29,7 @@ public class Team
 		this.draws = draws;
 	}
 
+
 	public int getTeamID()
 	{
 		return teamID;

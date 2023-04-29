@@ -28,7 +28,14 @@ public class Controller
 	@GetMapping("/teams")
 	public ResponseEntity<List<Team>> getTeamsInLeague(@RequestParam int leagueID) {
 		// TODO: Add error handling
-		return ResponseEntity.ok(service.getTeamsInLeague(leagueID));
+		try {
+			List<Team> teams = service.getTeamsInLeague(leagueID);
+			return ResponseEntity.ok(teams);
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@GetMapping("/players")

@@ -27,36 +27,10 @@ public class Service
 //	private final static String username = "cmagoo01";
 //	private final static String password = "Sp02267831";
 	
-	private final static String username = "rvelasq1";
-	private final static String password = "Sp02248298";
+	private final static String username = "rvaugha4";
+	private final static String password = "Sp02269960";
 
-	
-	public static void main(String[] args) throws Exception {
-		Service service = new Service();
-		service.examples();
-	}
-	
-//	public void examples() throws Exception {
-//		Connection connection = null;
-//
-//		try {
-//			connection = openConnection();
-//			
-//			
-//			
-//		}
-//		catch (SQLException e) {
-//			System.out.println("Trouble opening connection or executing SQL: " + e.getMessage());
-//			throw e;
-//		}
-//		finally {
-//			if (connection != null) {
-//				connection.close();
-//			}
-//		}
-//
-//	}
-	
+
 	public Service() throws SQLException {
 		Properties connectionProps = getProperties();
 
@@ -141,7 +115,7 @@ public class Service
 		return single;
 	}
 
-	public List<Team> getTeamsInLeague(Connection connection, int leagueID)
+	public List<Team> getTeamsInLeague(int leagueID) throws SQLException
 	{
 		// TODO: Retrieve the teams in a given league from the database
 		
@@ -154,7 +128,7 @@ public class Service
 			
 			if(resultSet != null) {
 				while(resultSet.next()) {
-					Team t = map(resultSet);
+					Team t = teamMap(resultSet);
 					teams.add(t);
 				}
 			}
@@ -173,6 +147,18 @@ public class Service
 		
 	} // end function
 
+	private Team teamMap(ResultSet resultSet) throws SQLException
+	{
+		Integer teamID = resultSet.getInt("teamid");
+		Integer userID = resultSet.getInt("userid");
+		Integer leagueID = resultSet.getInt("leagueid");
+		String name = resultSet.getString("teamname");
+		Integer wins = resultSet.getInt("wins");
+		Integer losses = resultSet.getInt("losses");
+		Integer draws = resultSet.getInt("draws");
+
+		return new Team(teamID, userID, leagueID, name, wins, losses, draws);
+	}
 
 	public List<Team> getUsersTeams(Connection connection, int userID)
 	{
