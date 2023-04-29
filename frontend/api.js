@@ -4,6 +4,14 @@ async function hello() {
     console.log(json)
 }
 
+async function getTeamsInLeague() {
+    const leagueID = 100;
+
+    const response = await fetch(`http://localhost:8080/teams?leagueID=${leagueID}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getTeamsTable', json);
+}
 async function addTeam() {
    const userID = document.getElementById("userID").value;
     const leagueID = document.getElementById("teamLeagueID").value;
@@ -31,6 +39,9 @@ async function addTeam() {
     console.log(response);
 
     let json = await response.json();
+
+    displayData("getTeamsTable", json);
+
     console.log(json);
 }
 async function addLeague() {
@@ -53,5 +64,37 @@ async function addLeague() {
     });
 
     let json = await response.json();
+
+
     console.log(json);
+}
+
+function displayData(tableId, objectArr) {
+    // if not an array, make it an array with one element
+    if (!Array.isArray(objectArr)) {
+        objectArr = [objectArr]
+    }
+
+    let table = document.getElementById(tableId)
+    // clear table
+    const rows = table.rows.length;
+    for (let i = 1; i < rows; i++) {
+        table.deleteRow(1);
+    }   
+
+    // map objects into new rows
+    for (const objectIdx in objectArr) {
+        const object = objectArr[objectIdx]
+        console.log('object is ', object);
+        let row = table.insertRow(-1);
+    
+        let colIdx = 0
+        for (const property in object) {
+            let newCell = row.insertCell(colIdx);
+            newCell.innerText = object[property];
+            console.log(property)
+            colIdx+=1;
+        }
+    }
+    
 }

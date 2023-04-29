@@ -20,8 +20,21 @@
     <h1>Basic Functionality</h1>
     <h2>Get League</h2>
     <p>Returns all the teams in a given league</p>
-    <button onclick="hello()">Get League</button> 
-
+    <button onclick="getTeamsInLeague()">Get League</button> 
+    <table id="getTeamsTable">
+      <thead>
+        <th>teamID</th>
+        <th>userID</th>
+        <th>leagueID</th>
+        <th>name</th>
+        <th>wins</th>
+        <th>losses</th>
+        <th>draws</th>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
     <h2>Get Teams for User</h2>
     <p>Returns all the teams for a given user</p>
     <button>Get User's Teams</button>
@@ -48,6 +61,7 @@
       <input type="text" id="losses" placeholder="losses"/>
       <input type="text" id="draws" placeholder="draws"/>
     </div>
+    
     <br />
 
     <h2>Drop Team</h2>
