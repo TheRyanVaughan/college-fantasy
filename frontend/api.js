@@ -5,7 +5,7 @@ async function hello() {
 }
 
 async function addTeam() {
-    const teamID = document.getElementById("teamID").value;
+   const userID = document.getElementById("userID").value;
     const leagueID = document.getElementById("teamLeagueID").value;
     const name = document.getElementById("teamName").value;
     const wins = document.getElementById("wins").value;
@@ -13,7 +13,7 @@ async function addTeam() {
     const draws = document.getElementById("draws").value;
 
     const team = {
-        teamID: teamID,
+       userID: userID,
         leagueID: leagueID, 
         name: name,
         wins: wins,
@@ -23,8 +23,12 @@ async function addTeam() {
     console.log(team)
     const response = await fetch("http://localhost:8080/team", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(team)
     });
+    console.log(response);
 
     let json = await response.json();
     console.log(json);
@@ -37,9 +41,9 @@ async function addLeague() {
 
     const league = {
         leagueID: leagueID, 
-        name: name,
+        leaguename: name,
         managerid: managerid,
-        maxNum: maxNum,
+        maxNumPlayers: maxNum,
     };
 
     console.log(league)

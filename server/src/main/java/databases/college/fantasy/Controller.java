@@ -73,6 +73,7 @@ public class Controller
 	public ResponseEntity<Team> addTeam(@RequestBody Team team) {
 		// TODO: Add error handling
 		// Adds a team to a league specified in the requestBody
+		System.out.println(team);
 		try {
 			team = service.addTeam(team);
 			return ResponseEntity.ok(service.addTeam(team));

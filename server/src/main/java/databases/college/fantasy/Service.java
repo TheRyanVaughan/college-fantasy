@@ -239,17 +239,14 @@ public class Service
 		try {
 
 			prepStatement = connection.prepareStatement("INSERT INTO fantasy_team (TeamID, UserID, LeagueID, teamName, wins, losses, draws) " +
-					" VALUES (?, ?, ?, ?, ?, ?, ?)" );
+					" VALUES (seqTID.nextval, ?, ?, ?, ?, ?, ?)" );
 
-
-			String getNextTID = "seqTID.nextval";
-			prepStatement.setString(1, getNextTID);
-			prepStatement.setInt(2, team.getUserID());
-			prepStatement.setInt(3, team.getLeagueID());
-			prepStatement.setString(4, team.getName());
-			prepStatement.setInt(5, team.getWins());
-			prepStatement.setInt(6, team.getLosses());
-			prepStatement.setInt(7, team.getDraws());
+			prepStatement.setInt(1, team.getUserID());
+			prepStatement.setInt(2, team.getLeagueID());
+			prepStatement.setString(3, team.getName());
+			prepStatement.setInt(4, team.getWins());
+			prepStatement.setInt(5, team.getLosses());
+			prepStatement.setInt(6, team.getDraws());
 			
 			prepStatement.executeUpdate();
 

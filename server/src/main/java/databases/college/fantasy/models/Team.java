@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Team
 {
+
 	int teamID;
 
 	int userID;
