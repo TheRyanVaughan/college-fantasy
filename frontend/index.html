@@ -9,17 +9,13 @@
     <title>Database Demo</title>
   </head>
   <body>
-    <h1>Teams In League</h1>
-    <select name="Teams" id="league1">
-      <option value="TeamA">TeamA</option>
-      <option value="TeamB">TeamB</option>
-      <option value="TeamC">TeamC</option>
-      <option value="TeamD">TeamC</option>
-    </select>
-    <br />
-    <h1>Basic Functionality</h1>
-    <h2>Get League</h2>
+    <h1>Databases Functionality</h1>
+
+    <h2>Teams In League</h2>
+
     <p>Returns all the teams in a given league</p>
+    <select name="Teams" id="league1">
+    </select>
     <span>
    
       <button onclick="getTeamsInLeague()">Get League</button> 
@@ -34,6 +30,19 @@
         <th>wins</th>
         <th>losses</th>
         <th>draws</th>
+      </thead>
+    </table>
+    <h2>Get users</h2>
+    <p>Get all users and their ids</p>
+    <button onclick="getUsers()">Get all users</button>
+    <table id="getAllUsersTable">
+      <thead>
+        <th>UserID</th>
+        <th>First name</th>
+        <th>Middle Initial</th>
+        <th>Last name</th>
+        <th>Username</th>
+        <th>DOB</th>
       </thead>
     </table>
     <h2>Get Teams for User</h2>
@@ -108,8 +117,6 @@
     <button onclick="addLeague()">Add League</button>
 
     <div class="inputs-div">
-
-      <input type="text" id="leagueID" placeholder="leagueID"/>
       <input type="text" id="leaguename" placeholder="name"/>
       <input type="text" id="managerid" placeholder="managerid"/>
       <input type="text" id="maxNoPlayers" placeholder="maxNoPlayers"/>

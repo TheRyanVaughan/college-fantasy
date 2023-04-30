@@ -6,10 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import databases.college.fantasy.models.Employee;
-import databases.college.fantasy.models.League;
-import databases.college.fantasy.models.PlayerOnTeam;
-import databases.college.fantasy.models.Team;
+import databases.college.fantasy.models.*;
 import oracle.jdbc.pool.OracleDataSource;
 import org.springframework.http.ResponseEntity;
 
@@ -83,6 +80,15 @@ public class Service
 		return employees;
 	}
 
+	private User userMap(ResultSet resultSet) throws SQLException {
+		int userid = resultSet.getInt("userid");
+		String firstname = resultSet.getString("firstname");
+		String minit = resultSet.getString("minit");
+		String last = resultSet.getString("lastname");
+		String username = resultSet.getString("username");
+		Date dob = resultSet.getDate("dob");
+		return new User(userid, firstname, convertToSingleChar(minit), last, username, dob);
+	}
 	private Employee map(ResultSet resultSet) throws SQLException {
 		String fname = resultSet.getString("fname");
 		String minitStr = resultSet.getString("minit");
@@ -105,6 +111,36 @@ public class Service
 
 		Employee emp = new Employee(fname, minit, lname, ssn, bdate, address, sex, salary, superssn, dno);
 		return emp;
+	}
+
+	public List<User> getAllUsers() throws SQLException
+	{
+		List<User> users = new ArrayList<User>();
+
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM APP_USERS");
+
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					User user = userMap(resultSet);
+					users.add(user);
+				}
+			}
+
+		}
+		catch (SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+
+		return users;
 	}
 
 	private Character convertToSingleChar(String raw) {
@@ -289,10 +325,32 @@ public class Service
 		}
 	}
 
-	public League addLeague(League league)
+	public League addLeague(League league) throws SQLException
 	{
-		// TODO: Create a league
-		return null;
+		PreparedStatement prepStatement = null;
+
+		try {
+
+			prepStatement = connection.prepareStatement("INSERT INTO league (TeamID, LeagueName, ManagerID, max_no_players) " +
+					" VALUES (seqLID.nextVal, ?, ?, ?)" );
+
+			prepStatement.setString(1, league.getLeaguename());
+			prepStatement.setInt(2, league.getManagerID());
+			prepStatement.setInt(3, league.getMaxNumPlayers());
+
+			prepStatement.executeUpdate();
+
+			return league;
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (prepStatement != null) {
+				prepStatement.close();
+			}
+		}
 	}
 
 	public League deleteLeague(int leagueID)

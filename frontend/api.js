@@ -4,7 +4,7 @@ async function hello() {
     console.log(json)
 }
 
-async function getTeamsInLeague() {
+async function getTeamsInLeague() { 
     const select = document.getElementById("league1");
 
     const leagueID = select.value;
@@ -14,6 +14,41 @@ async function getTeamsInLeague() {
     let json = await response.json();
     console.log(json)
     displayData('getTeamsTable', json);
+}
+
+async function getUsers() {
+
+    const response = await fetch("http://localhost:8080/users");
+    let json = await response.json();
+    displayData('getAllUsersTable', json);
+}
+async function getTeamsForUser() { //Caleb
+    const userID = 100;
+
+    const response = await fetch(`http://localhost:8080/user/teams?userID=${userID}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getUsersTeams', json);
+}
+
+async function getRoster() { //Caleb
+    const teamID = 100; //Should this be teamID or team name?
+
+    const response = await fetch(`http://localhost:8080/players?teamID=${teamID}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getRoster', json);
+}
+
+async function getPlayer() { //Caleb
+
+    const firstName = "Justin";
+    const lastName = "Moore";
+
+    const response = await fetch(`http://localhost:8080/player?firstName=${firstName}lastName=${lastName}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getPlayer', json);
 }
 
 async function addTeam() {
@@ -48,6 +83,7 @@ async function addTeam() {
 
     console.log(json);
 }
+
 async function addLeague() {
     const leagueID = document.getElementById("leagueID").value;
     const name = document.getElementById("leaguename").value;

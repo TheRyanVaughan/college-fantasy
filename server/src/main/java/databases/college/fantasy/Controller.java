@@ -1,9 +1,6 @@
 package databases.college.fantasy;
 
-import databases.college.fantasy.models.Employee;
-import databases.college.fantasy.models.League;
-import databases.college.fantasy.models.PlayerOnTeam;
-import databases.college.fantasy.models.Team;
+import databases.college.fantasy.models.*;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -99,7 +96,14 @@ public class Controller
 
 	@PostMapping("/league")
 	public ResponseEntity<League> addLeague(@RequestBody League league) {
-		return ResponseEntity.ok(service.addLeague(league));
+		try {
+			return ResponseEntity.ok(service.addLeague(league));
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.internalServerError().build();
+		}
+
 	}
 
 	@DeleteMapping("/league")
@@ -115,6 +119,17 @@ public class Controller
 		catch (SQLException e)
 		{
 			return ResponseEntity.ok(new ArrayList<League>());
+		}
+	}
+
+	@GetMapping("/users")
+	public ResponseEntity<List<User>> getAllUsers() {
+		try {
+			return ResponseEntity.ok(service.getAllUsers());
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.ok(new ArrayList<User>());
 		}
 	}
 
