@@ -23,12 +23,22 @@ async function getTeamsForUser() { //Caleb
 }
 
 async function getRoster() { //Caleb
-    const teamID = 100; //should this be teamID or team name?
+    const teamID = 100; //Should this be teamID or team name?
 
     const response = await fetch(`http://localhost:8080/user/teams?userID=${userID}`);
     let json = await response.json();
     console.log(json)
     displayData('getRoster', json);
+}
+
+async function getPlayer() { //Caleb
+    const firstName = "Justin";
+    const lastName = "Moore";
+
+    const response = await fetch(`http://localhost:8080/player?firstName=${firstName}lastName=${lastName}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getPlayer', json);
 }
 
 async function addTeam() {
