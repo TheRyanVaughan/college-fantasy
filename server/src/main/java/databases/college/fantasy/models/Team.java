@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Team
 {
+
 	int teamID;
 
 	int userID;
@@ -28,6 +29,7 @@ public class Team
 		this.losses = losses;
 		this.draws = draws;
 	}
+
 
 	public int getTeamID()
 	{

@@ -8,10 +8,10 @@ import java.util.Properties;
 
 import databases.college.fantasy.models.Employee;
 import databases.college.fantasy.models.League;
-import databases.college.fantasy.models.Player;
+import databases.college.fantasy.models.PlayerOnTeam;
 import databases.college.fantasy.models.Team;
 import oracle.jdbc.pool.OracleDataSource;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 
 @org.springframework.stereotype.Service
 
@@ -27,36 +27,10 @@ public class Service
 //	private final static String username = "cmagoo01";
 //	private final static String password = "Sp02267831";
 	
-	private final static String username = "rvelasq1";
-	private final static String password = "Sp02248298";
+	private final static String username = "rvaugha4";
+	private final static String password = "Sp02269960";
 
-	
-	public static void main(String[] args) throws Exception {
-		Service service = new Service();
-		service.examples();
-	}
-	
-//	public void examples() throws Exception {
-//		Connection connection = null;
-//
-//		try {
-//			connection = openConnection();
-//			
-//			
-//			
-//		}
-//		catch (SQLException e) {
-//			System.out.println("Trouble opening connection or executing SQL: " + e.getMessage());
-//			throw e;
-//		}
-//		finally {
-//			if (connection != null) {
-//				connection.close();
-//			}
-//		}
-//
-//	}
-	
+
 	public Service() throws SQLException {
 		Properties connectionProps = getProperties();
 
@@ -141,7 +115,7 @@ public class Service
 		return single;
 	}
 
-	public List<Team> getTeamsInLeague(Connection connection, int leagueID)
+	public List<Team> getTeamsInLeague(int leagueID) throws SQLException
 	{
 		// TODO: Retrieve the teams in a given league from the database
 		
@@ -154,7 +128,7 @@ public class Service
 			
 			if(resultSet != null) {
 				while(resultSet.next()) {
-					Team t = map(resultSet);
+					Team t = teamMap(resultSet);
 					teams.add(t);
 				}
 			}
@@ -173,8 +147,20 @@ public class Service
 		
 	} // end function
 
+	private Team teamMap(ResultSet resultSet) throws SQLException
+	{
+		Integer teamID = resultSet.getInt("teamid");
+		Integer userID = resultSet.getInt("userid");
+		Integer leagueID = resultSet.getInt("leagueid");
+		String name = resultSet.getString("teamname");
+		Integer wins = resultSet.getInt("wins");
+		Integer losses = resultSet.getInt("losses");
+		Integer draws = resultSet.getInt("draws");
 
-	public List<Team> getUsersTeams(Connection connection, int userID)
+		return new Team(teamID, userID, leagueID, name, wins, losses, draws);
+	}
+
+	public List<Team> getUsersTeams(int userID) throws SQLException
 	{
 		// TODO: Retrieve a user's teams from the database
 		
@@ -187,7 +173,7 @@ public class Service
 			
 			if(resultSet != null) {
 				while(resultSet.next()) {
-					Team ut = map(resultSet);
+					Team ut = teamMap(resultSet);
 					usersTeam.add(ut);
 				}
 			}
@@ -205,18 +191,20 @@ public class Service
 		return usersTeam;
 	}
 
-	public List<Player> getPlayersOnTeam(int teamID)
+	public List<PlayerOnTeam> getPlayersOnTeam(int teamID) throws SQLException
 	{
 		// TODO: Get the players on a given team
 		
-		List<Player> playersOnTeam = new ArrayList<>();
-		
+		List<PlayerOnTeam> playersOnTeam = new ArrayList<>();
+
+		Statement statement = null;
+
 		try {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + userID);
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + teamID);
 			
 			while(resultSet.next()) {
-				Player p = map(resultSet);
+				PlayerOnTeam p = playerMap(resultSet);
 				playersOnTeam.add(p);
 			}
 		}
@@ -233,6 +221,16 @@ public class Service
 		return playersOnTeam;
 	}
 
+	private PlayerOnTeam playerMap(ResultSet resultSet) throws SQLException
+	{
+		Integer playerID = resultSet.getInt("playerid");
+		Integer teamID = resultSet.getInt("teamid");
+		Integer userid = resultSet.getInt("userid");
+		Integer leagueID = resultSet.getInt("leagueid");
+
+		return new PlayerOnTeam(playerID, teamID, userid, leagueID);
+	}
+
 	public Team addTeam(Team team)
 			throws SQLException
 	{
@@ -242,19 +240,18 @@ public class Service
 		try {
 
 			prepStatement = connection.prepareStatement("INSERT INTO fantasy_team (TeamID, UserID, LeagueID, teamName, wins, losses, draws) " +
-					" VALUES (?, ?, ?, ?, ?, ?, ?)" );
+					" VALUES (seqTID.nextval, ?, ?, ?, ?, ?, ?)" );
 
-
-			String getNextTID = "seqTID.nextval";
-			prepStatement.setString(1, getNextTID);
-			prepStatement.setInt(2, team.getUserID());
-			prepStatement.setInt(3, team.getLeagueID());
-			prepStatement.setString(4, team.getName());
-			prepStatement.setInt(5, team.getWins());
-			prepStatement.setInt(6, team.getLosses());
-			prepStatement.setInt(7, team.getDraws());
+			prepStatement.setInt(1, team.getUserID());
+			prepStatement.setInt(2, team.getLeagueID());
+			prepStatement.setString(3, team.getName());
+			prepStatement.setInt(4, team.getWins());
+			prepStatement.setInt(5, team.getLosses());
+			prepStatement.setInt(6, team.getDraws());
 			
 			prepStatement.executeUpdate();
+
+			return team;
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
@@ -267,7 +264,7 @@ public class Service
 		}
 	}
 
-	public Team deleteTeam(int teamID)
+	public void deleteTeam(int teamID) throws SQLException
 	{
 		// TODO: Remove a team from the DB
 		
@@ -279,6 +276,7 @@ public class Service
 			String query = ("DELETE FROM fantasy_team WHERE teamID = " + teamID);
 			
 			statement.executeUpdate(query);
+
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
@@ -301,5 +299,34 @@ public class Service
 	{
 		// TODO: Delete a League
 		return null;
+	}
+
+	public List<String> getLeagueNames() throws SQLException
+	{
+		List<String> leagues = new ArrayList<>();
+
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT leaguename FROM LEAGUE");
+
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					String leagueName = resultSet.getString("leaguename");
+					leagues.add(leagueName);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+
+		return leagues;
 	}
 }

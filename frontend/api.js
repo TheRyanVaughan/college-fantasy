@@ -13,6 +13,7 @@ async function getTeamsInLeague() {
     displayData('getTeamsTable', json);
 }
 
+
 async function getTeamsForUser() { //Caleb
     const userID = 100;
 
@@ -145,3 +146,4 @@ async function loadLeaguesIntoOption() {
 document.addEventListener("DOMContentLoaded", () => {
     loadLeaguesIntoOption()
 })
+
