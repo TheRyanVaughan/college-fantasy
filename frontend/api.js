@@ -22,6 +22,15 @@ async function getTeamsForUser() { //Caleb
     displayData('getUsersTeams', json);
 }
 
+async function getRoster() { //Caleb
+    const teamID = 100; //should this be teamID or team name?
+
+    const response = await fetch(`http://localhost:8080/user/teams?userID=${userID}`);
+    let json = await response.json();
+    console.log(json)
+    displayData('getRoster', json);
+}
+
 async function addTeam() {
    const userID = document.getElementById("userID").value;
     const leagueID = document.getElementById("teamLeagueID").value;
