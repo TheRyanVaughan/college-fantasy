@@ -452,4 +452,39 @@ public class Service
 
 		return new Player(playerID, fn, minit, lname, university);
 	}
+
+	public void addPlayerToTeam(int teamID, int playerID) throws SQLException
+	{
+		PreparedStatement prepStatement = null;
+
+		try {
+
+			prepStatement = connection.prepareStatement("INSERT INTO players_on_team " +
+					"(playerid, teamid, userid, leagueid) VALUES " +
+					"(?, ?, (SELECT userid FROM fantasy_team WHERE teamid = ?), " +
+					" (SELECT leagueid FROM fantasy_team WHERE teamid = ?))");
+
+
+			prepStatement.setInt(1, playerID);
+			prepStatement.setInt(2,teamID);
+			prepStatement.setInt(3, teamID);
+			prepStatement.setInt(4, teamID);
+
+
+			prepStatement.executeUpdate();
+
+
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally
+		{
+			if (prepStatement != null)
+			{
+				prepStatement.close();
+			}
+		}
+	}
 }

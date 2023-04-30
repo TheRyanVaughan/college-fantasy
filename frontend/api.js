@@ -184,3 +184,12 @@ async function dropLeague() {
 
     loadLeaguesIntoOption()
 }
+
+async function addPlayerToTeam() {
+    let playerID = 300;
+    let teamID = 29;
+
+    const res = await fetch(`http://localhost:8080/rosters/addPlayer?teamID=${teamID}&playerID=${playerID}`, {
+        method: "POST"
+    })
+}

@@ -146,4 +146,15 @@ public class Controller
 		}
 	}
 
+	@PostMapping("/rosters/addPlayer")
+	public ResponseEntity<?> addPlayerToTeam(@RequestParam int teamID, @RequestParam int playerID) {
+		try {
+			service.addPlayerToTeam(teamID, playerID);
+			return ResponseEntity.ok().build();
+		}
+		catch (SQLException e) {
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
 }
