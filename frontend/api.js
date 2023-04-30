@@ -165,3 +165,22 @@ async function loadLeaguesIntoOption() {
 document.addEventListener("DOMContentLoaded", () => {
     loadLeaguesIntoOption()
 })
+
+async function dropTeamFromLeague() {
+    let teamId = document.getElementById("dropTeamID").value;
+
+    const response = await fetch(`http://localhost:8080/team?teamID=${teamId}`, {
+        method: "DELETE"
+    });
+
+}
+
+async function dropLeague() {
+    let leagueID = document.getElementById("dropLeagueID").value;
+
+    const response = await fetch(`http://localhost:8080/league?leagueID=${leagueID}`, {
+        method: "DELETE"
+    })
+
+    loadLeaguesIntoOption()
+}

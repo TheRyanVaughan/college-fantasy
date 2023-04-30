@@ -349,10 +349,27 @@ public class Service
 		return league;
 	}
 
-	public League deleteLeague(int leagueID)
+	public void deleteLeague(int leagueID) throws SQLException
 	{
-		// TODO: Delete a League
-		return null;
+		Statement statement = null;
+
+		try {
+			statement = connection.createStatement();
+
+			String query = ("DELETE FROM league WHERE leagueID = " + leagueID);
+
+			statement.executeUpdate(query);
+
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
 	}
 
 	public List<League> getLeagueNames() throws SQLException

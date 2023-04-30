@@ -115,7 +115,10 @@
 
     <h2>Drop Team</h2>
     <p>Drops a team to a specified league</p>
-    <button>Drop Team</button>
+    <span>
+      <button onclick="dropTeamFromLeague()">Drop Team</button>
+      <input type="number" id="dropTeamID" placeholder="team ID">
+    </span>
 
     <h2>Add League</h2>
     <p>Adds a league to the database</p>
@@ -130,7 +133,10 @@
 
     <h2>Drop League</h2>
     <p>Drops a league from the database</p>
-    <button>Drop League</button>
+    <span>
+      <input type="text" id="dropLeagueID" placeholder="leagueID"/>
+      <button onclick="dropLeague()">Drop League</button>
+    </span>
 
     <h1>Advanced Functionality</h1>
     <h2>Calculate Score</h2>

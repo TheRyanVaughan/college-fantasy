@@ -88,6 +88,7 @@ public class Controller
 
 	@DeleteMapping("/team")
 	public ResponseEntity<?> deleteTeam(@RequestParam int teamID) {
+		System.out.println("delete team " + teamID);
 		try {
 			service.deleteTeam(teamID);
 			return ResponseEntity.ok().build();
@@ -112,8 +113,15 @@ public class Controller
 	}
 
 	@DeleteMapping("/league")
-	public ResponseEntity<League> deleteLeague(@RequestParam int leagueID) {
-		return ResponseEntity.ok(service.deleteLeague(leagueID));
+	public ResponseEntity<?> deleteLeague(@RequestParam int leagueID) {
+		try {
+			service.deleteLeague(leagueID);
+			return ResponseEntity.ok().build();
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/leagues")
