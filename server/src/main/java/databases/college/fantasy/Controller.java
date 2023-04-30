@@ -108,13 +108,13 @@ public class Controller
 	}
 
 	@GetMapping("/leagues")
-	public ResponseEntity<List<String>> getLeagues() {
+	public ResponseEntity<List<League>> getLeagues() {
 		try {
 			return ResponseEntity.ok(service.getLeagueNames());
 		}
 		catch (SQLException e)
 		{
-			return ResponseEntity.ok(new ArrayList<String>());
+			return ResponseEntity.ok(new ArrayList<League>());
 		}
 	}
 

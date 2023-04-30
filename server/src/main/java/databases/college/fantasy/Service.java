@@ -301,19 +301,19 @@ public class Service
 		return null;
 	}
 
-	public List<String> getLeagueNames() throws SQLException
+	public List<League> getLeagueNames() throws SQLException
 	{
-		List<String> leagues = new ArrayList<>();
+		List<League> leagues = new ArrayList<>();
 
 		Statement statement = null;
 		try {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT leaguename FROM LEAGUE");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM LEAGUE");
 
 			if(resultSet != null) {
 				while(resultSet.next()) {
-					String leagueName = resultSet.getString("leaguename");
-					leagues.add(leagueName);
+					League league = leagueMap(resultSet);
+					leagues.add(league);
 				}
 			}
 		}
@@ -328,5 +328,14 @@ public class Service
 		}
 
 		return leagues;
+	}
+
+	private League leagueMap(ResultSet resultSet) throws SQLException
+	{
+		String leagueName = resultSet.getString("leagueName");
+		Integer leagueID = resultSet.getInt("leagueid");
+		Integer managerid = resultSet.getInt("managerID");
+		Integer max_no_players = resultSet.getInt("max_no_players");
+		return new League(leagueName, leagueID, managerid, max_no_players);
 	}
 }

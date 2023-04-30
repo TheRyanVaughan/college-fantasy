@@ -5,41 +5,15 @@ async function hello() {
 }
 
 async function getTeamsInLeague() {
-    const leagueID = 100;
+    const select = document.getElementById("league1");
+
+    const leagueID = select.value;
+    console.log(leagueID)
 
     const response = await fetch(`http://localhost:8080/teams?leagueID=${leagueID}`);
     let json = await response.json();
     console.log(json)
     displayData('getTeamsTable', json);
-}
-
-
-async function getTeamsForUser() { //Caleb
-    const userID = 100;
-
-    const response = await fetch(`http://localhost:8080/user/teams?userID=${userID}`);
-    let json = await response.json();
-    console.log(json)
-    displayData('getUsersTeams', json);
-}
-
-async function getRoster() { //Caleb
-    const teamID = 100; //Should this be teamID or team name?
-
-    const response = await fetch(`http://localhost:8080/players?teamID=${teamID}`);
-    let json = await response.json();
-    console.log(json)
-    displayData('getRoster', json);
-}
-
-async function getPlayer() { //Caleb
-    const firstName = "Justin";
-    const lastName = "Moore";
-
-    const response = await fetch(`http://localhost:8080/player?firstName=${firstName}lastName=${lastName}`);
-    let json = await response.json();
-    console.log(json)
-    displayData('getPlayer', json);
 }
 
 async function addTeam() {
@@ -130,20 +104,22 @@ function displayData(tableId, objectArr) {
 
 var hasLoaded = false;
 async function loadLeaguesIntoOption() {
+
+    let select = document.getElementById("league1")
+    select.innerHTML = ''
     let response = await fetch("http://localhost:8080/leagues")
     let json = await response.json()
 
     
-    let select = document.getElementById("league1")
     // clear previous options
-    select.innerHTML = ''
 
-    json.forEach(name => {
-        select.add(new Option(name));
+    json.forEach(obj => {
+        console.log(obj.leagueID)
+        let option = new Option(obj.leaguename, obj.leagueID)
+        select.add(option);
     })
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     loadLeaguesIntoOption()
 })
-
