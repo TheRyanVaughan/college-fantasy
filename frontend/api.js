@@ -22,6 +22,7 @@ async function getUsers() {
     let json = await response.json();
     displayData('getAllUsersTable', json);
 }
+
 async function getTeamsForUser() { //Caleb
     const userID = 100;
 
@@ -52,6 +53,7 @@ async function getPlayer() { //Caleb
 }
 
 async function addTeam() {
+    console.log("called addteam")
    const userID = document.getElementById("userID").value;
     const leagueID = document.getElementById("teamLeagueID").value;
     const name = document.getElementById("teamName").value;
@@ -79,32 +81,36 @@ async function addTeam() {
 
     let json = await response.json();
 
-    displayData("getTeamsTable", json);
-
     console.log(json);
 }
 
 async function addLeague() {
-    const leagueID = document.getElementById("leagueID").value;
     const name = document.getElementById("leaguename").value;
     const  managerid = document.getElementById("managerid").value;
     const maxNum = document.getElementById("maxNoPlayers").value;
 
     const league = {
-        leagueID: leagueID, 
         leaguename: name,
-        managerid: managerid,
+        managerID: managerid,
         maxNumPlayers: maxNum,
     };
 
     console.log(league)
     const response = await fetch("http://localhost:8080/league", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(league)
     });
 
-    let json = await response.json();
-
+    if (response.ok) {
+        alert("Success!")
+    }
+    else {
+        alert("Fail!")
+    }    
+    
     loadLeaguesIntoOption();
 
 }
@@ -151,7 +157,7 @@ async function loadLeaguesIntoOption() {
 
     json.forEach(obj => {
         console.log(obj.leagueID)
-        let option = new Option(obj.leaguename, obj.leagueID)
+        let option = new Option(`${obj.leaguename} (${obj.leagueID})`, obj.leagueID)
         select.add(option);
     })
 }

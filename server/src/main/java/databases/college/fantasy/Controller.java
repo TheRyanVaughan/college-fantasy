@@ -75,7 +75,7 @@ public class Controller
 		System.out.println(team);
 		try {
 			team = service.addTeam(team);
-			return ResponseEntity.ok(service.addTeam(team));
+			return ResponseEntity.ok(team);
 		}
 		catch (SQLException e) {
 			return ResponseEntity.internalServerError().build();
@@ -96,6 +96,7 @@ public class Controller
 
 	@PostMapping("/league")
 	public ResponseEntity<League> addLeague(@RequestBody League league) {
+		System.out.println("Adding a league " + league.toString());
 		try {
 			return ResponseEntity.ok(service.addLeague(league));
 		}

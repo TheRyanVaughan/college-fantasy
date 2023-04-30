@@ -267,10 +267,12 @@ public class Service
 		return new PlayerOnTeam(playerID, teamID, userid, leagueID);
 	}
 
+	private int attemptNo = 1;
 	public Team addTeam(Team team)
 			throws SQLException
 	{
-		
+		System.out.println("Adding team attempt + " + attemptNo);
+		attemptNo++;
 		PreparedStatement prepStatement = null;
 		
 		try {
@@ -287,7 +289,6 @@ public class Service
 			
 			prepStatement.executeUpdate();
 
-			return team;
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
@@ -298,6 +299,7 @@ public class Service
 				prepStatement.close();
 			}
 		}
+		return team;
 	}
 
 	public void deleteTeam(int teamID) throws SQLException
@@ -331,7 +333,7 @@ public class Service
 
 		try {
 
-			prepStatement = connection.prepareStatement("INSERT INTO league (TeamID, LeagueName, ManagerID, max_no_players) " +
+			prepStatement = connection.prepareStatement("INSERT INTO league (LeagueID, LeagueName, ManagerID, max_no_players) " +
 					" VALUES (seqLID.nextVal, ?, ?, ?)" );
 
 			prepStatement.setString(1, league.getLeaguename());
@@ -340,7 +342,7 @@ public class Service
 
 			prepStatement.executeUpdate();
 
-			return league;
+
 		}
 		catch(SQLException e) {
 			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
@@ -351,6 +353,7 @@ public class Service
 				prepStatement.close();
 			}
 		}
+		return league;
 	}
 
 	public League deleteLeague(int leagueID)
