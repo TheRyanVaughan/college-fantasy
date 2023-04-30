@@ -21,8 +21,9 @@
     <h2>Get League</h2>
     <p>Returns all the teams in a given league</p>
     <span>
-      
+   
       <button onclick="getTeamsInLeague()">Get League</button> 
+
     </span>
     <table id="getTeamsTable">
       <thead>
@@ -37,23 +38,57 @@
     </table>
     <h2>Get Teams for User</h2>
     <p>Returns all the teams for a given user</p>
-    <button>Get User's Teams</button>
+    <span>
+      <button onclick="getTeamsForUser()">Get User's Teams</button>
+    </span>
+    <table id="getUsersTeams">
+      <thead>
+        <th>teamID</th>
+        <th>userID</th>
+        <th>leagueID</th>
+        <th>name</th>
+        <th>wins</th>
+        <th>losses</th>
+        <th>draws</th>
+      </thead>
+    </table>
 
-    <h2>Get Team</h2>
+    <h2>Get Roster</h2>
     <p>Returns all the players on a given roster</p>
-    <button>Get team</button>
+    <span>
+      <button onclick="getRoster()">Get Roster</button>
+    </span>
+    <table id="getRoster">
+      <thead>
+        <th>playerID</th>
+        <th>teamID</th>
+        <th>userID</th>
+        <th>leagueID</th>
+      </thead>
+    </table>
 
     <h2>Get Player</h2>
     <p>
       Returns information about a specified player if given a first and last
       name
     </p>
-    <button>Get Player</button>
+    <span>
+      <button onclick="getPlayer()">Get Player</button>
+    </span>
+    <table id="getPlayer">
+      <thead>
+        <th>playerID</th>
+        <th>teamID</th>
+        <th>userID</th>
+        <th>leagueID</th>
+      </thead>
+    </table>
 
     <h2>Add Team</h2>
     <p>Adds a team to a specified league</p>
     <button onclick="addTeam()">Add Team</button>
     <div class="inputs-div">
+
       <input type="text" id="userID" placeholder="userID"/>
       <input type="text" id="teamLeagueID" placeholder="leagueID"/>
       <input type="text" id="teamName" placeholder="name"/>
@@ -73,6 +108,7 @@
     <button onclick="addLeague()">Add League</button>
 
     <div class="inputs-div">
+
       <input type="text" id="leagueID" placeholder="leagueID"/>
       <input type="text" id="leaguename" placeholder="name"/>
       <input type="text" id="managerid" placeholder="managerid"/>
