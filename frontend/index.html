@@ -48,6 +48,7 @@
     <h2>Get Teams for User</h2>
     <p>Returns all the teams for a given user</p>
     <span>
+      <input type="text" id="getTeamsUserID" placeholder="userID" />
       <button onclick="getTeamsForUser()">Get User's Teams</button>
     </span>
     <table id="getUsersTeams">
@@ -65,6 +66,7 @@
     <h2>Get Roster</h2>
     <p>Returns all the players on a given roster</p>
     <span>
+      <input type="text" id="getRosterTeamID" placeholder="teamID" />
       <button onclick="getRoster()">Get Roster</button>
     </span>
     <table id="getRoster">
@@ -82,14 +84,17 @@
       name
     </p>
     <span>
+      <input type="text" id="getPlayerFirstName" placeholder="first name">
+      <input type="text" id="getPlayerLastName" placeholder="last name">
       <button onclick="getPlayer()">Get Player</button>
     </span>
     <table id="getPlayer">
       <thead>
         <th>playerID</th>
-        <th>teamID</th>
-        <th>userID</th>
-        <th>leagueID</th>
+        <th>first name</th>
+        <th>middle initial</th>
+        <th>last name</th>
+        <th>university (first 20 letters)</th>
       </thead>
     </table>
 

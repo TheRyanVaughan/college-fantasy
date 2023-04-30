@@ -153,7 +153,6 @@ public class Service
 
 	public List<Team> getTeamsInLeague(int leagueID) throws SQLException
 	{
-		// TODO: Retrieve the teams in a given league from the database
 		
 		List<Team> teams = new ArrayList<Team>();
 		
@@ -198,7 +197,6 @@ public class Service
 
 	public List<Team> getUsersTeams(int userID) throws SQLException
 	{
-		// TODO: Retrieve a user's teams from the database
 		
 		List<Team> usersTeam = new ArrayList<Team>();
 		
@@ -229,7 +227,6 @@ public class Service
 
 	public List<PlayerOnTeam> getPlayersOnTeam(int teamID) throws SQLException
 	{
-		// TODO: Get the players on a given team
 		
 		List<PlayerOnTeam> playersOnTeam = new ArrayList<>();
 
@@ -237,7 +234,7 @@ public class Service
 
 		try {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM players WHERE teamID = " + teamID);
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM players_on_team WHERE teamID = " + teamID);
 			
 			while(resultSet.next()) {
 				PlayerOnTeam p = playerMap(resultSet);
@@ -267,12 +264,9 @@ public class Service
 		return new PlayerOnTeam(playerID, teamID, userid, leagueID);
 	}
 
-	private int attemptNo = 1;
 	public Team addTeam(Team team)
 			throws SQLException
 	{
-		System.out.println("Adding team attempt + " + attemptNo);
-		attemptNo++;
 		PreparedStatement prepStatement = null;
 		
 		try {
@@ -304,7 +298,6 @@ public class Service
 
 	public void deleteTeam(int teamID) throws SQLException
 	{
-		// TODO: Remove a team from the DB
 		
 		Statement statement = null;
 		
@@ -391,6 +384,38 @@ public class Service
 		return leagues;
 	}
 
+	public Player getPlayerByName(String firstname, String lastname) throws SQLException
+	{
+		Player player = null;
+
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("SELECT * FROM COLLEGE_PLAYERS WHERE " +
+					"firstname=? AND lastName=?");
+
+			statement.setString(1, firstname);
+			statement.setString(2, lastname);
+
+			ResultSet resultSet = statement.executeQuery();
+			if(resultSet != null) {
+				while(resultSet.next()) {
+					player = collegePlayerMap(resultSet);
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("An exception occurred when executing a statement: " + e.getMessage());
+			throw e;
+		}
+		finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+
+		return player;
+	}
+
 	private League leagueMap(ResultSet resultSet) throws SQLException
 	{
 		String leagueName = resultSet.getString("leagueName");
@@ -398,5 +423,16 @@ public class Service
 		Integer managerid = resultSet.getInt("managerID");
 		Integer max_no_players = resultSet.getInt("max_no_players");
 		return new League(leagueName, leagueID, managerid, max_no_players);
+	}
+
+	private Player collegePlayerMap(ResultSet resultSet) throws SQLException
+	{
+		Integer playerID = resultSet.getInt("playerid");
+		String fn = resultSet.getString("firstname");
+		Character minit = convertToSingleChar(resultSet.getString("minit"));
+		String lname = resultSet.getString("lastname");
+		String university = resultSet.getString("university");
+
+		return new Player(playerID, fn, minit, lname, university);
 	}
 }

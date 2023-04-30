@@ -7,3 +7,11 @@ h1{
     display: flex;
     flex-direction: row;
 }
+
+th {
+    border: 1px solid gray;
+}
+
+td {
+    border: 1px solid gray;
+}

@@ -40,7 +40,7 @@ public class Controller
 	public ResponseEntity<List<PlayerOnTeam>> getPlayersOnTeam(@RequestParam int teamID) {
 		try {
 			List<PlayerOnTeam> players = service.getPlayersOnTeam(teamID);
-			return ResponseEntity.ok(service.getPlayersOnTeam(teamID));
+			return ResponseEntity.ok(players);
 		}
 		catch (SQLException e)
 		{
@@ -52,7 +52,7 @@ public class Controller
 	@GetMapping("/user/teams")
 	public ResponseEntity<List<Team>> getTeamsOfUser(@RequestParam int userID) {
 		try {
-			List<Team> teams = service.getTeamsInLeague(userID);
+			List<Team> teams = service.getUsersTeams(userID);
 			return ResponseEntity.ok(teams);
 		}
 		catch (SQLException e)
@@ -62,10 +62,14 @@ public class Controller
 	}
 
 	@GetMapping("/player")
-	public ResponseEntity<PlayerOnTeam> getPlayerByName(@RequestParam String firstName, @RequestParam String lastName) {
-		// TODO: Add error handling
-		// what if multiple players have same name? Add university? Return list? discuss
-		return null;
+	public ResponseEntity<Player> getPlayerByName(@RequestParam String firstName, @RequestParam String lastName) {
+		try {
+			return ResponseEntity.ok(service.getPlayerByName(firstName, lastName));
+		}
+		catch (SQLException e)
+		{
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@PostMapping("/team")

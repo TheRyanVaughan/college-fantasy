@@ -24,7 +24,7 @@ async function getUsers() {
 }
 
 async function getTeamsForUser() { //Caleb
-    const userID = 100;
+    const userID = document.getElementById("getTeamsUserID").value;
 
     const response = await fetch(`http://localhost:8080/user/teams?userID=${userID}`);
     let json = await response.json();
@@ -33,7 +33,7 @@ async function getTeamsForUser() { //Caleb
 }
 
 async function getRoster() { //Caleb
-    const teamID = 100; //Should this be teamID or team name?
+    const teamID = document.getElementById("getRosterTeamID").value; //Should this be teamID or team name?
 
     const response = await fetch(`http://localhost:8080/players?teamID=${teamID}`);
     let json = await response.json();
@@ -43,10 +43,10 @@ async function getRoster() { //Caleb
 
 async function getPlayer() { //Caleb
 
-    const firstName = "Justin";
-    const lastName = "Moore";
+    const firstName = document.getElementById("getPlayerFirstName").value;
+    const lastName = document.getElementById("getPlayerLastName").value;
 
-    const response = await fetch(`http://localhost:8080/player?firstName=${firstName}lastName=${lastName}`);
+    const response = await fetch(`http://localhost:8080/player?firstName=${firstName}&lastName=${lastName}`);
     let json = await response.json();
     console.log(json)
     displayData('getPlayer', json);
