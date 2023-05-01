@@ -5,18 +5,25 @@ import java.util.Objects;
 public class PlayerOnTeam
 {
 		int playerID;
+
+	String firstname;
+	String lastname;
 	
 		int teamID;
 
 		int userID;
 
 		int leagueID;
+
+
 		
-		public PlayerOnTeam(int playerID, int teamID, int userID, int leagueID) {
+		public PlayerOnTeam(int playerID, int teamID, int userID, int leagueID, String firstname, String lastname) {
 			this.playerID = playerID;
 			this.teamID = teamID;
 			this.userID = userID;
 			this.leagueID = leagueID;
+			this.firstname = firstname;
+			this.lastname = lastname;
 		}
 
 		public int getPlayerID() {
@@ -51,27 +58,48 @@ public class PlayerOnTeam
 			this.leagueID = leagueID;
 		}
 
-		@Override
-		public int hashCode() {
-			return Objects.hash(leagueID, playerID, teamID, userID);
-		}
+	public String getFirstname()
+	{
+		return firstname;
+	}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			PlayerOnTeam other = (PlayerOnTeam) obj;
-			return leagueID == other.leagueID && playerID == other.playerID && teamID == other.teamID
-					&& userID == other.userID;
-		}
+	public void setFirstname(String firstname)
+	{
+		this.firstname = firstname;
+	}
 
-		@Override
-		public String toString() {
-			return "Player [playerID=" + playerID + ", teamID=" + teamID + ", userID=" + userID + ", leagueID="
-					+ leagueID + "]";
-		}
+	public String getLastname()
+	{
+		return lastname;
+	}
+
+	public void setLastname(String lastname)
+	{
+		this.lastname = lastname;
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		PlayerOnTeam that = (PlayerOnTeam) o;
+		return playerID == that.playerID && teamID == that.teamID && userID == that.userID && leagueID == that.leagueID
+				&& firstname.equals(that.firstname) && lastname.equals(that.lastname);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(playerID, teamID, userID, leagueID, firstname, lastname);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "PlayerOnTeam{" + "playerID=" + playerID + ", teamID=" + teamID + ", userID=" + userID + ", leagueID="
+				+ leagueID + ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' + '}';
+	}
 }

@@ -229,15 +229,20 @@ public class Service
 	{
 		
 		List<PlayerOnTeam> playersOnTeam = new ArrayList<>();
-
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 
 		try {
-			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM players_on_team WHERE teamID = " + teamID);
+			preparedStatement = connection.prepareStatement("SELECT " +
+					"cp.firstname, cp.lastname, pt.playerID, pt.teamID, pt.userID, pt.leagueID " +
+					"FROM college_players cp, players_on_team pt WHERE cp.playerid = pt.playerid " +
+					"AND pt.teamID = ?");
+
+			preparedStatement.setInt(1, teamID);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				PlayerOnTeam p = playerMap(resultSet);
+				System.out.println(p);
 				playersOnTeam.add(p);
 			}
 		}
@@ -246,8 +251,8 @@ public class Service
 			throw e;
 		}
 		finally {
-			if (statement != null) {
-				statement.close();
+			if ( preparedStatement != null) {
+				preparedStatement.close();
 			}
 		}
 		
@@ -256,12 +261,15 @@ public class Service
 
 	private PlayerOnTeam playerMap(ResultSet resultSet) throws SQLException
 	{
+		System.out.println(resultSet);
 		Integer playerID = resultSet.getInt("playerid");
 		Integer teamID = resultSet.getInt("teamid");
 		Integer userid = resultSet.getInt("userid");
 		Integer leagueID = resultSet.getInt("leagueid");
+		String fname = resultSet.getString("firstname");
+		String lname = resultSet.getString("lastname");
 
-		return new PlayerOnTeam(playerID, teamID, userid, leagueID);
+		return new PlayerOnTeam(playerID, teamID, userid, leagueID, fname, lname);
 	}
 
 	public Team addTeam(Team team)
