@@ -310,10 +310,12 @@ public class Service
 		Statement statement = null;
 		
 		try {
+
+			String deletePlayersOnTeams = "DELETE FROM players_on_team where teamID = " + teamID;
 			statement = connection.createStatement();
-			
+
 			String query = ("DELETE FROM fantasy_team WHERE teamID = " + teamID);
-			
+			statement.executeUpdate(deletePlayersOnTeams);
 			statement.executeUpdate(query);
 
 		}

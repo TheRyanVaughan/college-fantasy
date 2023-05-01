@@ -186,8 +186,8 @@ async function dropLeague() {
 }
 
 async function addPlayerToTeam() {
-    let playerID = 300;
-    let teamID = 29;
+    let playerID = document.getElementById("addPlayerToTeamPID").value;
+    let teamID = document.getElementById("addPlayerToTeamTID").value;
 
     const res = await fetch(`http://localhost:8080/rosters/addPlayer?teamID=${teamID}&playerID=${playerID}`, {
         method: "POST"
