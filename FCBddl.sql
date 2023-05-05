@@ -59,7 +59,7 @@ CREATE TABLE Players_on_Team(
     TeamID      INT NOT NULL,
     UserID      INT NOT NULL,
     LeagueID    INT NOT NULL,
-    CONSTRAINT PT_PK PRIMARY KEY(TeamID)
+    CONSTRAINT PT_PK PRIMARY KEY(TeamID, playerid)
     );
 
 CREATE TABLE Match_Up(
